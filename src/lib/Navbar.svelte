@@ -6,13 +6,13 @@
 <nav>
   <ul>
     <li class={currentPage === 'welcome' ? 'active' : ''}>
-      <a href="/">Welcome</a>
+      <a href="/project2/">Welcome</a>
     </li>
     <li class={currentPage === 'scheduling' ? 'active' : ''}>
-      <a href="/scheduling">Scheduling</a>
+      <a href="/project2/scheduling">Scheduling</a>
     </li>
     <li class={currentPage === 'contact' ? 'active' : ''}>
-      <a href="/contact">Contact</a>
+      <a href="/project2/contact">Contact</a>
     </li>
   </ul>
 </nav>
