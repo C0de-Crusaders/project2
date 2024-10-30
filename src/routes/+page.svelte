@@ -1,15 +1,15 @@
 <script>
-  import Navbar from '$lib/Navbar.svelte';
+ 
 </script>
 
-<Navbar currentPage="" />
+
 
 <div class="hero">
   <div class="hero-content">
     <h1>Welcome to PlanNext</h1>
     <p>Manage Your Events With Ease</p>
     <p>Plan your events with ease and organization.</p>
-    <button class="get-started" on:click={() => window.location.href = 'dashboard'}>Get Started</button>
+    <a href="/project2/dashboard" class="get-started">Get Started</a>
   </div>
 </div>
 
@@ -52,6 +52,7 @@
   .hero {
     background-color: #4a7c59;
     color: white;
+    
     padding: 2rem;
     text-align: center;
   }
@@ -67,6 +68,9 @@
     padding: 0.5rem 1rem;
     border: none;
     cursor: pointer;
+    margin-top: 1rem;
+    text-decoration: none;
+    display: inline-block;
   }
 
   .features {

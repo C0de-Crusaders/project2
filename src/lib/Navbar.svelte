@@ -19,8 +19,8 @@
 
 <nav class="sidebar">
   <ul>
-    <li class={currentPage === '' ? 'active' : ''}>
-      <a href="/project2">Dashboard</a>
+    <li class={currentPage === 'dashboard' ? 'active' : ''}>
+      <a href="/project2/dashboard">Dashboard</a>
     </li>
     <li class={currentPage === 'scheduling' ? 'active' : ''}>
       <a href="/project2/scheduling">Scheduling</a>
