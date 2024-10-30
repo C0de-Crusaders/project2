@@ -21,7 +21,7 @@
     <input type="password" bind:value={password} placeholder="Password" />
     <input type="password" bind:value={confirmPassword} placeholder="Confirm Password" />
     <button on:click={handleSignup}>Sign Up</button>
-    <button on:click={() => window.location.href = '/project2/login'}>Go to Login</button>
+    <a href="/project2/login" class="link-button">Go to Login</a>
   </div>
   
   <style>

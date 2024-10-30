@@ -9,7 +9,7 @@
     <h1>Welcome to PlanNext</h1>
     <p>Manage Your Events With Ease</p>
     <p>Plan your events with ease and organization.</p>
-    <a href="/project2/dashboard" class="get-started">Get Started</a>
+    <a href="/project2/signup" class="get-started">Get Started</a>
   </div>
 </div>
 

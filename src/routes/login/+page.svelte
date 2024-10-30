@@ -33,7 +33,7 @@
     <input type="email" bind:value={email} placeholder="Email" />
     <input type="password" bind:value={password} placeholder="Password" />
     <button on:click={handleLogin}>Log In</button>
-    <button on:click={() => window.location.href = '/project2/signup'}>Go to Signup</button>
+    <a href="/project2/signup" class="link-button">Go to Sign Up</a>
   </div>
   
   <style>
