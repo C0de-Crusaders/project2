@@ -9,7 +9,7 @@
     <h1>Welcome to PlanNext</h1>
     <p>Manage Your Events With Ease</p>
     <p>Plan your events with ease and organization.</p>
-    <button class="get-started" on:click={() => window.location.href = 'project2/dashboard'}>Get Started</button>
+    <button class="get-started" on:click={() => window.location.href = 'dashboard'}>Get Started</button>
   </div>
 </div>
 
