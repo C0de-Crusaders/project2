@@ -17,7 +17,7 @@
 
         if (storedUser.email === email && storedUser.password === password) {
           alert('Login successful!');
-          window.location.href = '/project2/home';
+          window.location.href = '/project2/dashboard';
         } else {
           alert('Invalid email or password!');
         }
