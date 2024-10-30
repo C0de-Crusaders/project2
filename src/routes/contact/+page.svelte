@@ -43,7 +43,7 @@
 
 <style>
   .contact-container {
-    padding: 2rem;
+    padding: 6rem 2rem 2rem;
     background-color: #e0e0d1;
     max-width: 800px;
     margin: 0 auto;

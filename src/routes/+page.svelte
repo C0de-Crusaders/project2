@@ -1,16 +1,15 @@
-<!-- src/routes/+page.svelte -->
 <script>
-  import Navbar from '$lib/Navbar.svelte';
+
 </script>
 
-<Navbar currentPage="welcome" />
+
 
 <div class="hero">
   <div class="hero-content">
     <h1>Welcome to PlanNext</h1>
     <p>Manage Your Events With Ease</p>
     <p>Plan your events with ease and organization.</p>
-    <button class="get-started">Get Started</button>
+    <button class="get-started" on:click={() => window.location.href = '/project2/signup'}>Get Started</button>
   </div>
 </div>
 
