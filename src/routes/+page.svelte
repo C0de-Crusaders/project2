@@ -1,8 +1,8 @@
 <script>
-
+  import Navbar from '$lib/Navbar.svelte';
 </script>
 
-
+<Navbar currentPage="" />
 
 <div class="hero">
   <div class="hero-content">
