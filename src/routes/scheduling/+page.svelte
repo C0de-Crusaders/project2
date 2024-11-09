@@ -34,7 +34,7 @@
           <div class="modal">
             <div class="modal-content">
               <span class="close" on:click={toggleAddModal}>&times;</span>
-              <h2>Add Event</h2>
+              <h2><strong>Add Event</strong></h2>
               <form>
                 <label>Event Name</label>
                 <input type="text" placeholder="Enter event name" />
@@ -88,13 +88,19 @@
       <div class="modal">
         <div class="modal-content">
           <span class="close" on:click={closeViewModal}>&times;</span>
-          <h2>sample.data</h2>
-          <img src="pic2.jpg" alt="Event Image" class="event-image" />
-          <p><strong>Location:</strong> sample.data</p>
-          <p><strong>Contact:</strong>sample.data</p>
-          <p><strong>START:</strong>sample.data</p>
-          <p><strong>END:</strong>sample.data</p>
-          <p><strong>Description:</strong> sample.data</p>
+          <img src="pic2.jpg" alt="Event Image" class="event-image centered" />
+          <h2 class="modal-title">Birthday</h2>
+          <p><strong>Location:</strong> Lincoln Heights Subd.</p>
+          <p><strong>Contact:</strong> +63970****9</p>
+          <div class="date-container">
+            <div class="date-item">
+              <strong class="start">START:</strong> October 31, 2024 1:00 PM
+            </div>
+            <div class="date-item">
+              <strong class="end">END:</strong> October 31, 2024 6:30 PM
+            </div>
+          </div>
+          <p><strong>Description:</strong> A dialog is a type of modal window...</p>
           <button class="edit-button">Edit</button>
         </div>
       </div>
@@ -349,9 +355,10 @@
   .modal {
     display: flex;
     position: fixed;
-    z-index: 1;
+    z-index: 3;
     left: 0;
     top: 0;
+    padding-top: 4rem;
     width: 100%;
     height: 100%;
     overflow: auto;
@@ -361,17 +368,18 @@
   }
 
   .modal-content {
-    background-color: #fefefe;
-    padding: 20px;
+    background-color: #A3B18A;
+    padding: 30px;
+    margin-top: 2rem;
     border: 1px solid #888;
     border-radius: 8px;
     width: 90%;
-    max-width: 500px;
+    max-width: 700px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   .close {
-    color: #aaa;
+    color: #000000;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -379,19 +387,22 @@
 
   .close:hover,
   .close:focus {
-    color: black;
+    color: rgb(217, 41, 41);
     text-decoration: none;
     cursor: pointer;
   }
 
   .edit-button {
-    margin-top: 20px;
-    background-color: #344E41;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    display: block; /* Make the button a block element */
+    width: 150px; /* Increase the width of the button */
+    margin: 20px auto; /* Center the button with auto margins */
+    background-color: #344E41; /* Button background color */
+    color: white; /* Button text color */
+    padding: 10px; /* Padding for the button */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    text-align: center; /* Center text inside the button */
   }
 
   /* Additional styles for form elements */
@@ -419,5 +430,48 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+  }
+
+  .centered {
+    display: block;
+    margin: 0 auto; /* Center the image */
+  }
+
+  .date-container {
+    display: flex; /* Use flexbox for inline layout */
+    justify-content: space-between; /* Space between start and end */
+    margin: 1rem 0; /* Margin for spacing */
+  }
+
+  .date-item {
+    font-size: 12px;
+    padding: 0.4rem 0.5rem 0.4rem 0;
+    background-color: #f0f0f0; /* Background color for the date item */
+
+    border-radius: 4px; /* Rounded corners */
+    color: black; /* Text color */
+  }
+
+  .start{
+    font-size: 12px;
+    padding: 0.7rem;
+    background-color: #588157; /* Background color for the strong text */
+    color: rgb(0, 0, 0); /* Text color for strong */
+    border-radius: 4px; /* Rounded corners for strong background */
+  }
+
+  .end{
+    font-size: 12px;
+    padding: 0.7rem;
+    background-color: #000000; /* Background color for the strong text */
+    color: white; /* Text color for strong */
+    border-radius: 4px; /* Rounded corners for strong background */
+  }
+
+  .modal-title {
+    text-align: center; /* Center the title */
+    margin-top: 10px; /* Space between the image and title */
+    font-size: 1.5rem; /* Adjust font size as needed */
+    color: black; /* Change color if needed */
   }
 </style>
