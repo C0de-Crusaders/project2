@@ -1,5 +1,20 @@
 <script>
     import Navbar from '$lib/Navbar.svelte';
+    let showAddModal = false; // State to control add event modal visibility
+    let showViewModal = false; // State to control view event modal visibility
+    let selectedEvent = {}; // Object to hold the selected event details
+
+    function toggleAddModal() {
+        showAddModal = !showAddModal; // Toggle add modal visibility
+    }
+
+    function openViewModal() {
+        showViewModal = true; // Show the view modal
+    }
+
+    function closeViewModal() {
+        showViewModal = false; // Hide the view modal
+    }
 </script>
 
 <Navbar currentPage="scheduling" />
@@ -13,25 +28,78 @@
           <input type="text" placeholder="Search events" class="search-input" />
           <div class="event-search">
             <button class="filter-events">Filter Events</button>
-            <button class="add-events">Add Events</button>
+            <button class="add-events" on:click={toggleAddModal}>Add Events</button>
           </div>
+          {#if showAddModal}
+          <div class="modal">
+            <div class="modal-content">
+              <span class="close" on:click={toggleAddModal}>&times;</span>
+              <h2>Add Event</h2>
+              <form>
+                <label>Event Name</label>
+                <input type="text" placeholder="Enter event name" />
+                
+                <label>Event Type</label>
+                <input type="text" placeholder="Enter event type" />
+                
+                <label>Event Description</label>
+                <textarea placeholder="Add description"></textarea>
+                
+                <label>Contact No.</label>
+                <input type="text" placeholder="Add Contact" />
+                
+                <label>Start Date and Time</label>
+                <input type="datetime-local" />
+                
+                <label>End Date and Time</label>
+                <input type="datetime-local" />
+                
+                <label>Location</label>
+                <input type="text" placeholder="Enter event location" />
+                
+                <label>Image</label>
+                <input type="file" />
+                
+                <button type="submit">Save</button>
+              </form>
+            </div>
+          </div>
+        {/if}
       </div>
 
       <div class="today-section">
-          <h2>Today</h2>
-          <div class="event-card">
-              <img src="pic2.jpg" alt="Event Image" class="event-image" />
-              <div class="event-details">
-                  <h3>Visit Cemetery</h3>
-                  <p>Holiday</p>
-                  <div class="event-info">
-                      <span class="date-time">Nov 1, 2024</span>
-                      <span class="date-time">3:00 AM</span>
-                  </div>
-              </div>
-              <button class="view-button">VIEW</button>
-          </div>
+        <h2>Today</h2>
+        <div class="event-card" on:click={() => openViewModal()}>
+            <img src="pic2.jpg" alt="Event Image" class="event-image" />
+            <div class="event-details">
+                <h3>Visit Cemetery</h3>
+                <p>Holiday</p>
+                <div class="event-info">
+                    <span class="date-time">Nov 1, 2024</span>
+                    <span class="date-time">3:00 AM</span>
+                </div>
+            </div>
+            <button class="view-button" on:click={() => openViewModal()}>VIEW</button>
+        </div>
+    </div>
+  
+    <!-- View Modal -->
+    {#if showViewModal}
+      <div class="modal">
+        <div class="modal-content">
+          <span class="close" on:click={closeViewModal}>&times;</span>
+          <h2>sample.data</h2>
+          <img src="pic2.jpg" alt="Event Image" class="event-image" />
+          <p><strong>Location:</strong> sample.data</p>
+          <p><strong>Contact:</strong>sample.data</p>
+          <p><strong>START:</strong>sample.data</p>
+          <p><strong>END:</strong>sample.data</p>
+          <p><strong>Description:</strong> sample.data</p>
+          <button class="edit-button">Edit</button>
+        </div>
       </div>
+    {/if}
+  
 
       <div class="yesterday-section">
           <h2>Yesterday</h2>
@@ -276,5 +344,80 @@
 
   .social-icon:hover {
     color: #ffffff; /* Change color on hover */
+  }
+
+  .modal {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .edit-button {
+    margin-top: 20px;
+    background-color: #344E41;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  /* Additional styles for form elements */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  label {
+    margin-top: 10px;
+  }
+
+  input, textarea {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  button[type="submit"] {
+    margin-top: 20px;
+    background-color: #344E41;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
   }
 </style>
