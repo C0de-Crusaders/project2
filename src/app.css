@@ -1,3 +1,10 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+
+  body {
+    background-color: #e0e0d1; /* Set background color for all pages */
+    font-family: Arial, sans-serif; /* Optional: Set a default font */
+  }
+

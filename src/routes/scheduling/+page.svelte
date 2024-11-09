@@ -4,120 +4,277 @@
 
 <Navbar currentPage="scheduling" />
 
-<div class="scheduling-container">
-  <h1>Upcoming Events</h1>
-  <div class="schedule-section">
-    <div class="schedule-controls">
-      <h2>Schedule Your Events</h2>
-      <button class="add-event">Add Event</button>
-      <button class="view-events">View All Events</button>
+<div class="contact-content">
+  <div class="contact-header"> 
+    <h1>SCHEDULE</h1>
+  </div> 
+  <div class="scheduling-container">
+      <div class="search-container">
+          <input type="text" placeholder="Search events" class="search-input" />
+          <div class="event-search">
+            <button class="filter-events">Filter Events</button>
+            <button class="add-events">Add Events</button>
+          </div>
+      </div>
+
+      <div class="today-section">
+          <h2>Today</h2>
+          <div class="event-card">
+              <img src="pic2.jpg" alt="Event Image" class="event-image" />
+              <div class="event-details">
+                  <h3>Visit Cemetery</h3>
+                  <p>Holiday</p>
+                  <div class="event-info">
+                      <span class="date-time">Nov 1, 2024</span>
+                      <span class="date-time">3:00 AM</span>
+                  </div>
+              </div>
+              <button class="view-button">VIEW</button>
+          </div>
+      </div>
+
+      <div class="yesterday-section">
+          <h2>Yesterday</h2>
+          <div class="event-card">
+              <img src="pic2.jpg" alt="Event Image" class="event-image" />
+              <div class="event-details">
+                  <h3>Birthday</h3>
+                  <p>Birthday</p>
+                  <div class="event-info">
+                      <span class="date-time">Oct 31, 2024</span>
+                      <span class="date-time">1:00 PM</span>
+                  </div>
+              </div>
+              <button class="view-button">VIEW</button>
+          </div>
+          <div class="event-card">
+              <img src="pic2.jpg" alt="Event Image" class="event-image" />
+              <div class="event-details">
+                  <h3>Mandated Half Day</h3>
+                  <p>National Event</p>
+                  <div class="event-info">
+                      <span class="date-time">Oct 31, 2024</span>
+                      <span class="date-time">12:00 PM</span>
+                  </div>
+              </div>
+              <button class="view-button">VIEW</button>
+          </div>
+      </div>
+      <div class="pagination">
+        <button class="prev-button">← Previous</button>
+        <span class="page-number">1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>...</span>
+        <span>9</span>
+        <span>10</span>
+        <button class="next-button">Next →</button>
     </div>
-    <div class="calendar">
-      <h2>November 2024</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Sun</th>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thu</th>
-            <th>Fri</th>
-            <th>Sat</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Calendar dates go here -->
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <div class="event-list">
-    <div class="event-card">
-      <h3>Meeting with Clients</h3>
-      <p>Discuss project details</p>
-      <span>10:00 AM - 11:00 AM | On Office</span>
-    </div>
-    <div class="event-card">
-      <h3>Meeting with Clients</h3>
-      <p>Discuss project details</p>
-      <span>10:00 AM - 11:00 AM | On Office</span>
-    </div>
-    <!-- More event cards -->
   </div>
 </div>
-
 <footer>
-  <p>© 2024 PlanNext. All Rights Reserved.</p>
+    <p class="copyright">© 2024 PlanNext. All Rights Reserved.</p>
+    <div class="social-icons">
+        <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+        <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+    </div>
 </footer>
 
 <style>
-  .scheduling-container {
-    padding: 6rem 2rem 2rem;
-    background-color: #e0e0d1;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
+  .contact-content {
+    padding-top: 4rem;
 
-  h1 {
-    text-align: center;
-    color: #4a7c59;
   }
-
-  .schedule-section {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-  }
-
-  .schedule-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .add-event, .view-events {
-    background-color: #2c5f2d;
+  .contact-header {
+    background-color: #3A5A40;
+    padding: 2rem;
+    height: 6rem;
+    display: flex; /* Added to enable flexbox */
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
     color: white;
+    width: 100%;
+    margin: 0;
+  }
+  .contact-header h1 {
+    font-size: 2rem;
+    font-weight: bolder;
+  }
+    .scheduling-container {
+        padding: 2rem;
+        background-color: #e0e0d1;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    
+
+    .search-container {
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center; /* Center align items */
+        margin-bottom: 2rem;
+    }
+
+    .search-input {
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 800px; /* Adjust width as needed */
+        margin-bottom: 1rem; /* Space between input and buttons */
+    }
+
+    .event-search {
+        display: flex; /* Keep buttons in a row */
+        justify-content: center; /* Center buttons */
+        
+    }
+    .add-events {
+      background-color: #344E41;
+    }
+    .filter-events {
+      background-color: #588157;
+    }
+    .filter-events, .add-events {
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 250px;
+        margin-left: 0.5rem; /* Space between buttons */
+    }
+
+    .today-section, .yesterday-section {
+        margin-bottom: 2rem;
+    }
+    .today-section h2, .yesterday-section h2 {
+        margin-bottom: 2rem;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    .event-card {
+        background-color: #588157;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center; /* Align items vertically */
+        justify-content: space-between; /* Space between details and button */
+    }
+
+    .event-image {
+        width: 100px; /* Fixed width for the image */
+        height: auto; /* Maintain aspect ratio */
+        border-radius: 8px;
+        margin-right: 1rem; /* Space between image and text */
+    }
+
+    .event-details {
+        flex-grow: 1; /* Allow details to take remaining space */
+        color: white; /* Text color */
+        font-size: 12px;
+    }
+    .event-details h3 {
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    .event-info {
+        display: flex;
+        justify-content: flex-start; /* Align items to the left */
+        margin: 0.5rem 0; /* Margin for spacing */
+    }
+
+    .date-time {
+        background-color: #A3B18A; /* Light green background */
+        padding: 0.5rem;
+        font-size: 10px;
+        border-radius: 4px;
+        margin-right: 0.5rem; /* Space between date and time */
+        color: black; /* Text color */
+    }
+
+    .view-button {
+        background-color: #344E41;
+        color: white;
+        font-size: 10px;
+        padding: 0.5rem;
+        border: none;
+        width: 11rem;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 1rem; /* Space between details and button */
+    }
+
+    .pagination {
+    display: flex;
+    font-size: 12px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}
+.pagination span {
+  padding: 0.5rem;
+}
+
+.prev-button{
+    color: rgba(0, 0, 0, 0.519);
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
+    margin: 0 0.5rem; /* Space between buttons */
+}
+.next-button {
+    color: rgb(0, 0, 0);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 0.5rem; /* Space between buttons */
+}
 
-  .calendar {
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  th, td {
-    border: 1px solid #ccc;
-    padding: 0.5rem;
+.page-number {
+    background-color: #344E41; /* Change to match the template */
+    color: white;
+    
+    border-radius: 4px;
+   
+}
+    footer {
+    background-color: #a3b18a;
     text-align: center;
-  }
-
-  .event-list {
+    padding: 1rem;
     display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+    justify-content: center; /* Center the copyright text */
+    align-items: center;
+    position: relative; /* Position relative for absolute positioning of icons */
+    height: 8rem;
   }
 
-  .event-card {
-    background-color: #a3c9a8;
-    padding: 1rem;
-    border-radius: 8px;
-    width: 200px;
+  footer p {
+    font-weight: bold;
+    margin: 0;
   }
 
-  footer {
-    background-color: #a3c9a8;
-    text-align: center;
-    padding: 1rem;
+  .social-icons {
+    position: absolute; /* Position icons absolutely */
+    right: 1rem; /* Align to the right */
+    bottom: 1rem; /* Align to the bottom */
+    display: flex;
+    gap: 1rem; /* Space between icons */
+  }
+
+  .social-icon {
+    color: rgb(0, 0, 0); /* Icon color */
+    font-size: 1.5rem; /* Icon size */
+    text-decoration: none; /* Remove underline */
+  }
+
+  .social-icon:hover {
+    color: #ffffff; /* Change color on hover */
   }
 </style>
