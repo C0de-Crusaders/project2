@@ -6,6 +6,7 @@
     let showAddModal = false;
     let showWarning = false;
     let showViewModal = false;
+    let showDateFilter = false;
     let selectedEvent = null;
     let eventName = '';
     let eventType = '';
@@ -15,6 +16,9 @@
     let endDateTime = '';
     let location = '';
     let events = [];
+    let searchQuery = '';
+    let filterYear = ''; // Year input for filtering
+    let filterMonth = ''; // Month input for filtering
     let errors = {
         eventName: '',
         eventType: '',
@@ -24,6 +28,14 @@
         location: ''
     };
 
+    $: filteredEvents = events.filter(event => {
+        const eventDate = new Date(event.startDateTime);
+        const eventYear = eventDate.getFullYear().toString();
+
+        return event.eventName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+               (!filterYear || eventYear === filterYear.toString());
+    });
+
     function toggleAddModal() {
         showAddModal = !showAddModal;
     }
@@ -31,6 +43,10 @@
     function toggleViewModal(event = null) {
         showViewModal = !showViewModal;
         selectedEvent = event;
+    }
+
+    function toggleDateFilter() {
+        showDateFilter = !showDateFilter;
     }
 
     function handleSubmit(event) {
@@ -85,11 +101,17 @@
 </div>
 <div class="scheduling-container">
     <div class="search-container">
-        <input type="text" placeholder="Search events" class="search-input" />
+        <input type="text" placeholder="Search events" class="search-input" bind:value={searchQuery} />
         <div class="event-search">
-          <button class="filter-events">Filter Events</button>
+          <details class="filter-dropdown">
+            <summary class="filter-events">Filter Events</summary>
+            <div class="filter-content">
+              <input type="number" placeholder="Year" bind:value={filterYear} class="date-input" min="1900" max="2100" />
+            </div>
+          </details>
           <button class="add-events" on:click={toggleAddModal}>Add Events</button>
         </div>
+       
         {#if showAddModal}
         <div class="modal">
           <div class="modal-content">
@@ -141,7 +163,7 @@
 
   <div class="today-section">
     <h2>Events</h2>
-    {#each events as event}
+    {#each filteredEvents as event}
       <div class="event-card">
         <img src="pic2.jpg" alt="Event Image" class="event-image" />
         <div class="event-details">
@@ -236,24 +258,51 @@
     }
 
     .event-search {
-        display: flex; /* Keep buttons in a row */
-        justify-content: center; /* Center buttons */
-        
+        display: flex;
+        justify-content: space-evenly; /* Space between dropdown and button */
+        align-items: flex-start; /* Align items to the top */
+        width: 100%; /* Full width to prevent shifting */
+        max-width: 800px; /* Adjust as needed */
     }
-    .add-events {
-      background-color: #344E41;
+
+    .filter-dropdown {
+        position: relative;
+        z-index: 3; /* Ensure dropdown is above other elements */
     }
+
+    .filter-content {
+        display: flex;
+        flex-direction: column;
+        background-color: #e0e0d1;
+        padding: 1rem;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 0.5rem;
+    }
+
     .filter-events {
-      background-color: #588157;
+        cursor: pointer;
+        list-style: none;
+        background-color: #344E41; /* Keep background color */
+        color: white;
+        padding: 0.5rem 1rem;
+        width: 250px;
+        border-radius: 4px;
+        text-align: center;
     }
-    .filter-events, .add-events {
+
+    .filter-events::marker {
+        display: none;
+    }
+
+    .add-events {
+        background-color: #344E41;
         color: white;
         padding: 0.5rem 1rem;
         border: none;
         border-radius: 4px;
         cursor: pointer;
         width: 250px;
-        margin-left: 0.5rem; /* Space between buttons */
     }
 
     .today-section, .yesterday-section {
