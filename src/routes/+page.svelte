@@ -89,8 +89,8 @@
  .hero {
   background-color: #588157;
   color: white;
-  margin-top: 4rem;
-  padding: 3rem;
+  margin-top: 2rem;
+  padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -103,6 +103,7 @@
   gap: 2rem;
   max-width: 1000px;
   width: 100%;
+  flex-direction: column;
 }
 
 .logo-image {
@@ -183,18 +184,19 @@
 
 .feature-cards {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
   padding: 2rem;
-
 }
 
 .card {
+  flex: 1 1 300px;
+  max-width: 350px;
+  height: 400px;
   background-color: rgba(163, 201, 168, 0.6); 
   border: 4px solid #344E41;
   border-radius: 12px;
-  width: 350px;
-  height: 400px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -289,5 +291,30 @@ footer p {
     height: auto; 
     border-radius: 8px; 
     margin-bottom: 1rem; 
+}
+
+@media (min-width: 768px) {
+  .hero-content {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .text-content h1 {
+    font-size: 1.2rem;
+  }
+
+  .tagline {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 1 1 100%;
+    max-width: 100%;
+    height: auto;
+  }
 }
 </style>

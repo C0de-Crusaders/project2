@@ -67,22 +67,6 @@
             location
         };
 
-        // Check for overlapping events
-        const isOverlapping = events.some(existingEvent => {
-            const existingStart = new Date(existingEvent.startDateTime);
-            const existingEnd = new Date(existingEvent.endDateTime);
-            const newStart = new Date(newEvent.startDateTime);
-            const newEnd = new Date(newEvent.endDateTime);
-
-            return (newStart < existingEnd && newEnd > existingStart);
-        });
-
-        if (isOverlapping) {
-            errors.startDateTime = 'Existing Event is already set in this date.';
-            console.log('Validation errors:', errors);
-            return; // Exit the function if there's an overlap
-        }
-
         const { isValid, errors: validationErrors } = validateEvent(newEvent);
         errors = validationErrors;
         if (isValid) {
@@ -94,7 +78,7 @@
             }, 5000);
             toggleAddModal();
 
-            // Reset form fields
+            
             eventName = '';
             eventType = '';
             eventDescription = '';
@@ -125,7 +109,7 @@
     }
 </script>
 
-<Navbar currentPage="scheduling" />
+<Navbar currentPage="schedule" />
 
 <div class="contact-content">
   <div class="contact-header"> 
@@ -136,6 +120,7 @@
     <div class="search-container">
         <input type="text" placeholder="Search events" class="search-input" bind:value={searchQuery} />
         <div class="event-search">
+          <div class="button-container">
           <details class="filter-dropdown">
             <summary class="filter-events">Filter Events</summary>
             <div class="filter-content">
@@ -143,6 +128,7 @@
             </div>
           </details>
           <button class="add-events" on:click={toggleAddModal}>Add Events</button>
+        </div>
         </div>
        
         {#if showAddModal}
@@ -279,27 +265,34 @@
         flex-direction: column; 
         align-items: center; 
         margin-bottom: 2rem;
+        width: 100%;
     }
 
     .search-input {
         padding: 0.5rem;
         border: 1px solid #ccc;
         border-radius: 4px;
-        width: 800px; 
+        width: 100%;
+        max-width: 800px;
         margin-bottom: 1rem; 
     }
 
     .event-search {
         display: flex;
-        justify-content: space-evenly; 
-        align-items: flex-start; 
-        width: 100%;
-        max-width: 800px;
+        justify-content: center; /* Center the buttons */
+        align-items: center; 
+        width: 100%; /* Full width for the container */
+        max-width: 800px; /* Set a maximum width for larger screens */
+        margin: 0 auto; /* Center the container */
     }
 
     .filter-dropdown {
         position: relative;
         z-index: 3;
+        width: 100%;
+        max-width: 150px;
+        margin: 0 auto;
+        height: 40px;
     }
 
     .filter-content {
@@ -310,15 +303,32 @@
         border-radius: 4px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-top: 0.5rem;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        display: none;
     }
 
+    .filter-dropdown[open] .filter-content {
+        display: flex;
+    }
+
+    .button-container {
+        display: flex; /* Use flexbox for the buttons */
+        position: fixed;
+        margin-top: 2rem;
+        justify-content: space-between;
+        align-items: center; 
+        gap: 1rem; /* Space between buttons */
+    }
     .filter-events {
         cursor: pointer;
         list-style: none;
         background-color: #344E41;
         color: white;
         padding: 0.5rem 1rem;
-        width: 250px;
+        width: 100%;
         border-radius: 4px;
         text-align: center;
     }
@@ -334,8 +344,11 @@
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        width: 250px;
+
+        width: 190px;
     }
+
+    
 
     .today-section, .yesterday-section {
         margin-bottom: 2rem;
@@ -608,4 +621,10 @@
     font-size: 1.5rem; 
     color: black; 
   }
+
+  @media (min-width: 768px) {
+        .filter-dropdown {
+            max-width: 150px; /* Wider max width for larger screens */
+        }
+    }
 </style>
