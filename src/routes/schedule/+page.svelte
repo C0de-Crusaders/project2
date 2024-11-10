@@ -67,6 +67,22 @@
             location
         };
 
+        // Check for overlapping events
+        const isOverlapping = events.some(existingEvent => {
+            const existingStart = new Date(existingEvent.startDateTime);
+            const existingEnd = new Date(existingEvent.endDateTime);
+            const newStart = new Date(newEvent.startDateTime);
+            const newEnd = new Date(newEvent.endDateTime);
+
+            return (newStart < existingEnd && newEnd > existingStart);
+        });
+
+        if (isOverlapping) {
+            errors.startDateTime = 'Event is already set in this date.';
+            console.log('Validation errors:', errors);
+            return; // Exit the function if there's an overlap
+        }
+
         const { isValid, errors: validationErrors } = validateEvent(newEvent);
         errors = validationErrors;
         if (isValid) {
