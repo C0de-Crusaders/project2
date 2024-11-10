@@ -34,9 +34,9 @@
 
 <div class="sliding-text-container">
   <div class="sliding-text">
-    <p>Plan your events seamlessly with our app</p>
-    <p>Organize your schedule efficiently</p>
-    <p>Stay updated with reminders</p>
+    <p><strong>Plan your events seamlessly with our app </strong></p>
+    <p><strong>Organize your schedule efficiently </strong> </p>
+    <p><strong> Stay updated with reminders </strong> </p>
   </div>
 </div>
 
@@ -47,7 +47,7 @@
     <div class="card">
       <div class="card-header">EVENTS</div>
       <div class="card-body">
-        <p>Manage Events</p>
+       
       </div>
       <div class="card-footer">
         <strong>Event Calendar</strong>
@@ -58,7 +58,7 @@
     <div class="card">
       <div class="card-header">REMINDERS</div>
       <div class="card-body">
-        <p>Event Reminders</p>
+        
       </div>
       <div class="card-footer">
         <strong>Reminders</strong>
@@ -69,7 +69,7 @@
     <div class="card">
       <div class="card-header">IMAGES</div>
       <div class="card-body">
-        <p>Upload Images</p>
+        
       </div>
       <div class="card-footer">
         <strong>Add Images</strong>
@@ -188,7 +188,7 @@
 }
 
 .card {
-  background-color: #a3c9a89c;
+  background-color: rgba(163, 201, 168, 0.6); /* Semi-transparent background */
   border: 4px solid #344E41;
   border-radius: 12px;
   width: 350px;
@@ -200,6 +200,17 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  background-image: url('/EVENTS.gif'); /* Background for EVENTS card */
+  background-size: cover; /* Cover the entire card */
+  background-position: center; /* Center the background */
+}
+
+.card:nth-child(2) {
+  background-image: url('/REMINDER.gif'); /* Background for REMINDERS card */
+}
+
+.card:nth-child(3) {
+  background-image: url('/IMAGES.gif'); /* Background for IMAGES card */
 }
 
 .card-header {
@@ -269,5 +280,12 @@ footer p {
 .features p {
   font-size: 1rem; /* Adjust size as needed */
   font-weight: bold; /* Bold text */
+}
+
+.feature-gif {
+    width: 100%; /* Adjust width as needed */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Optional: rounded corners */
+    margin-bottom: 1rem; /* Space between GIF and text */
 }
 </style>

@@ -71,6 +71,15 @@
                 showWarning = false;
             }, 5000);
             toggleAddModal();
+
+            // Clear the form fields
+            eventName = '';
+            eventType = '';
+            eventDescription = '';
+            contactNumber = '';
+            startDateTime = '';
+            endDateTime = '';
+            location = '';
         } else {
             console.log('Validation errors:', errors);
         }
