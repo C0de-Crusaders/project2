@@ -304,7 +304,7 @@
 
     .filter-dropdown {
         position: relative;
-        z-index: 3;
+        z-index: 1;
         width: 100%;
         max-width: 150px;
         margin: 0 auto;
@@ -332,7 +332,7 @@
 
     .button-container {
         display: flex; /* Use flexbox for the buttons */
-        position: fixed;
+        
         margin-top: 2rem;
         justify-content: space-between;
         align-items: center; 
