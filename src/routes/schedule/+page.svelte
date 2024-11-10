@@ -28,6 +28,8 @@
         endDateTime: '',
         location: ''
     };
+    let eventImage = null; // New state variable for the uploaded image
+    let eventImageUrl = ''; // New state variable for the uploaded image URL
 
     // Reactive statement to filter events based on search query and year
     $: filteredEvents = events.filter(event => {
@@ -64,7 +66,8 @@
             contactNumber,
             startDateTime,
             endDateTime,
-            location
+            location,
+            eventImageUrl
         };
 
         // Check for overlapping events
@@ -74,11 +77,12 @@
             const newStart = new Date(newEvent.startDateTime);
             const newEnd = new Date(newEvent.endDateTime);
 
+            // Check if the new event overlaps with the existing event
             return (newStart < existingEnd && newEnd > existingStart);
         });
 
         if (isOverlapping) {
-            errors.startDateTime = 'Event is already set in this date.';
+            errors.startDateTime = 'Event overlaps with an existing event.';
             console.log('Validation errors:', errors);
             return; // Exit the function if there's an overlap
         }
@@ -94,17 +98,24 @@
             }, 5000);
             toggleAddModal();
 
-            
-            eventName = '';
-            eventType = '';
-            eventDescription = '';
-            contactNumber = '';
-            startDateTime = '';
-            endDateTime = '';
-            location = '';
+            // Reset form fields
+            resetForm();
+
         } else {
             console.log('Validation errors:', errors);
         }
+    }
+
+    // Function to reset form fields
+    function resetForm() {
+        eventName = '';
+        eventType = '';
+        eventDescription = '';
+        contactNumber = '';
+        startDateTime = '';
+        endDateTime = '';
+        location = '';
+        eventImageUrl = ''; // Reset the image URL as well
     }
 
     // Function to remove a selected event from the events array
@@ -180,6 +191,18 @@
               <input type="text" name="location" bind:value={location} placeholder="Enter event location" />
               {#if errors.location}<small class="error">{errors.location}</small>{/if}
 
+              <label>Event Image</label>
+              <input type="file" accept="image/*" on:change={e => {
+                  const file = e.target.files[0];
+                  if (file) {
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                          eventImageUrl = reader.result; // Set the image URL
+                      };
+                      reader.readAsDataURL(file);
+                  }
+              }} />
+
               <button type="submit">Save</button>
             </form>
           </div>
@@ -200,7 +223,7 @@
     <h2>Events</h2>
     {#each filteredEvents as event}
       <div class="event-card">
-        <img src="pic2.jpg" alt="Event Image" class="event-image" />
+        <img src={event.eventImageUrl || "pic2.jpg"} alt="Event Image" class="event-image" />
         <div class="event-details">
           <h3>{event.eventName}</h3>
           <p>{event.eventType}</p>
@@ -218,7 +241,7 @@
     <div class="modal">
       <div class="modal-content">
         <span class="close" on:click={toggleViewModal}>&times;</span>
-        <img src="pic2.jpg" alt="Event Image" class="event-image centered" />
+        <img src={selectedEvent.eventImageUrl || "pic2.jpg"} alt="Event Image" class="event-image centered" />
         <h2 class="modal-title">{selectedEvent.eventName}</h2>
         <p><strong>Location:</strong> {selectedEvent.location}</p>
         <p><strong>Contact:</strong> {selectedEvent.contactNumber}</p>

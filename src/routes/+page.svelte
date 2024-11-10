@@ -53,7 +53,7 @@
       </div>
       <div class="card-footer">
         <strong>Event Calendar</strong>
-        <p>Add, edit, and view events</p>
+        <p>Add, and view events</p>
       </div>
     </div>
 
