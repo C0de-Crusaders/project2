@@ -1,16 +1,17 @@
-<!-- src/routes/contact/+page.svelte -->
 <script>
 
   import Navbar from '$lib/Navbar.svelte';
-  import { validateForm } from '$lib/validation';
+  import { validateForm } from '$lib/formValidator';
   import { fly } from 'svelte/transition';
 
+  // State variables for form inputs
   let name = '';
   let email = '';
   let phone = '';
   let reason = '';
   let additional = '';
 
+  // Object to hold validation errors
   let errors = {
     name: '',
     email: '',
@@ -22,6 +23,7 @@
   let showWarning = false;
   let isListVisible = false;
 
+  // Function to handle form submission
   function handleSubmit(event) {
     event.preventDefault();
     const { isValid, errors: validationErrors } = validateForm({ name, email, phone, reason, additional });
@@ -36,6 +38,7 @@
     }
   }
 
+  // Function to toggle the visibility of the additional details list
   function toggleList() {
     isListVisible = !isListVisible;
   }
@@ -44,8 +47,8 @@
 
 <Navbar currentPage="contact" />
 
-<div class="scheduling-content">
-  <div class="scheduling-header">
+<div class="contact-content">
+  <div class="contact-header">
     <h1>Contact Us</h1>
   </div>
   <div class="contact-container">
@@ -110,10 +113,10 @@
     margin: 0;
     font-family: Arial, sans-serif;
   }
-  .scheduling-content {
+  .contact-content {
     padding-top: 4rem;
   }
-  .scheduling-header {
+  .contact-header {
     background-color: #3A5A40;
     padding: 2rem;
     height: 6rem;
@@ -124,7 +127,7 @@
     width: 100%;
     margin: 0;
   }
-  .scheduling-header h1 {
+  .contact-header h1 {
     font-size: 2rem;
     font-weight: bolder;
   }

@@ -19,7 +19,7 @@ const config = {
 			strict: true
 		}),
 		paths: {
-			base: '/project2' // Ensure this matches your repo name
+			base: '/project2'
 		}
 	}
 };

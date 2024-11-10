@@ -12,8 +12,8 @@
       <li class={currentPage === 'home' ? 'active' : ''}>
         <a href="/project2">Home</a>
       </li>
-      <li class={currentPage === 'scheduling' ? 'active' : ''}>
-        <a href="/project2/scheduling">Schedule</a>
+      <li class={currentPage === 'schedule' ? 'active' : ''}>
+        <a href="/project2/schedule">Schedule</a>
       </li>
       <li class={currentPage === 'contact' ? 'active' : ''}>
         <a href="/project2/contact">Contact Us</a>

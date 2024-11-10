@@ -1,8 +1,9 @@
 <script>
     import Navbar from '$lib/Navbar.svelte';
-    import { validateEvent } from '$lib/validation';
+    import { validateEvent } from '$lib/formValidator';
     import { fly } from 'svelte/transition';
 
+    // State variables for modal visibility and event details
     let showAddModal = false;
     let showWarning = false;
     let showViewModal = false;
@@ -17,8 +18,8 @@
     let location = '';
     let events = [];
     let searchQuery = '';
-    let filterYear = ''; // Year input for filtering
-    let filterMonth = ''; // Month input for filtering
+    let filterYear = ''; 
+    let filterMonth = '';
     let errors = {
         eventName: '',
         eventType: '',
@@ -28,6 +29,7 @@
         location: ''
     };
 
+    // Reactive statement to filter events based on search query and year
     $: filteredEvents = events.filter(event => {
         const eventDate = new Date(event.startDateTime);
         const eventYear = eventDate.getFullYear().toString();
@@ -36,19 +38,23 @@
                (!filterYear || eventYear === filterYear.toString());
     });
 
+    // Function to toggle the visibility of the add event modal
     function toggleAddModal() {
         showAddModal = !showAddModal;
     }
 
+    // Function to toggle the view modal for a selected event
     function toggleViewModal(event = null) {
         showViewModal = !showViewModal;
         selectedEvent = event;
     }
 
+    // Function to toggle the date filter visibility
     function toggleDateFilter() {
         showDateFilter = !showDateFilter;
     }
 
+    // Function to handle the submission of the event form
     function handleSubmit(event) {
         event.preventDefault();
         const newEvent = {
@@ -61,6 +67,22 @@
             location
         };
 
+        // Check for overlapping events
+        const isOverlapping = events.some(existingEvent => {
+            const existingStart = new Date(existingEvent.startDateTime);
+            const existingEnd = new Date(existingEvent.endDateTime);
+            const newStart = new Date(newEvent.startDateTime);
+            const newEnd = new Date(newEvent.endDateTime);
+
+            return (newStart < existingEnd && newEnd > existingStart);
+        });
+
+        if (isOverlapping) {
+            errors.startDateTime = 'Existing Event is already set in this date.';
+            console.log('Validation errors:', errors);
+            return; // Exit the function if there's an overlap
+        }
+
         const { isValid, errors: validationErrors } = validateEvent(newEvent);
         errors = validationErrors;
         if (isValid) {
@@ -72,7 +94,7 @@
             }, 5000);
             toggleAddModal();
 
-            // Clear the form fields
+            // Reset form fields
             eventName = '';
             eventType = '';
             eventDescription = '';
@@ -85,11 +107,13 @@
         }
     }
 
+    // Function to remove a selected event from the events array
     function removeEvent() {
         events = events.filter(event => event !== selectedEvent);
         toggleViewModal();
     }
 
+    // Function to format date and time for display
     function formatDateTime(dateTime) {
         const date = new Date(dateTime);
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -188,7 +212,6 @@
     {/each}
   </div>
 
-  <!-- View Modal -->
   {#if showViewModal && selectedEvent}
     <div class="modal">
       <div class="modal-content">
@@ -231,9 +254,9 @@
     background-color: #3A5A40;
     padding: 2rem;
     height: 6rem;
-    display: flex; /* Added to enable flexbox */
-    justify-content: center; /* Centers horizontally */
-    align-items: center; /* Centers vertically */
+    display: flex; 
+    justify-content: center;
+    align-items: center; 
     color: white;
     width: 100%;
     margin: 0;
@@ -253,8 +276,8 @@
 
     .search-container {
         display: flex;
-        flex-direction: column; /* Stack elements vertically */
-        align-items: center; /* Center align items */
+        flex-direction: column; 
+        align-items: center; 
         margin-bottom: 2rem;
     }
 
@@ -262,21 +285,21 @@
         padding: 0.5rem;
         border: 1px solid #ccc;
         border-radius: 4px;
-        width: 800px; /* Adjust width as needed */
-        margin-bottom: 1rem; /* Space between input and buttons */
+        width: 800px; 
+        margin-bottom: 1rem; 
     }
 
     .event-search {
         display: flex;
-        justify-content: space-evenly; /* Space between dropdown and button */
-        align-items: flex-start; /* Align items to the top */
-        width: 100%; /* Full width to prevent shifting */
-        max-width: 800px; /* Adjust as needed */
+        justify-content: space-evenly; 
+        align-items: flex-start; 
+        width: 100%;
+        max-width: 800px;
     }
 
     .filter-dropdown {
         position: relative;
-        z-index: 3; /* Ensure dropdown is above other elements */
+        z-index: 3;
     }
 
     .filter-content {
@@ -292,7 +315,7 @@
     .filter-events {
         cursor: pointer;
         list-style: none;
-        background-color: #344E41; /* Keep background color */
+        background-color: #344E41;
         color: white;
         padding: 0.5rem 1rem;
         width: 250px;
@@ -328,20 +351,20 @@
         border-radius: 8px;
         margin-bottom: 1rem;
         display: flex;
-        align-items: center; /* Align items vertically */
-        justify-content: space-between; /* Space between details and button */
+        align-items: center;
+        justify-content: space-between;
     }
 
     .event-image {
-        width: 100px; /* Fixed width for the image */
-        height: auto; /* Maintain aspect ratio */
+        width: 100px;
+        height: auto; 
         border-radius: 8px;
-        margin-right: 1rem; /* Space between image and text */
+        margin-right: 1rem; 
     }
 
     .event-details {
-        flex-grow: 1; /* Allow details to take remaining space */
-        color: white; /* Text color */
+        flex-grow: 1;
+        color: white;
         font-size: 12px;
     }
     .event-details h3 {
@@ -351,17 +374,17 @@
 
     .event-info {
         display: flex;
-        justify-content: flex-start; /* Align items to the left */
-        margin: 0.5rem 0; /* Margin for spacing */
+        justify-content: flex-start; 
+        margin: 0.5rem 0;
     }
 
     .date-time {
-        background-color: #A3B18A; /* Light green background */
+        background-color: #A3B18A; 
         padding: 0.5rem;
         font-size: 10px;
         border-radius: 4px;
-        margin-right: 0.5rem; /* Space between date and time */
-        color: black; /* Text color */
+        margin-right: 0.5rem; 
+        color: black; 
     }
 
     .view-button {
@@ -373,7 +396,7 @@
         width: 11rem;
         border-radius: 4px;
         cursor: pointer;
-        margin-left: 1rem; /* Space between details and button */
+        margin-left: 1rem; 
     }
 
     .pagination {
@@ -393,7 +416,7 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin: 0 0.5rem; /* Space between buttons */
+    margin: 0 0.5rem; 
 }
 .next-button {
     color: rgb(0, 0, 0);
@@ -401,11 +424,11 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin: 0 0.5rem; /* Space between buttons */
+    margin: 0 0.5rem; 
 }
 
 .page-number {
-    background-color: #344E41; /* Change to match the template */
+    background-color: #344E41;
     color: white;
     
     border-radius: 4px;
@@ -416,9 +439,9 @@
     text-align: center;
     padding: 1rem;
     display: flex;
-    justify-content: center; /* Center the copyright text */
+    justify-content: center;
     align-items: center;
-    position: relative; /* Position relative for absolute positioning of icons */
+    position: relative;
     height: 8rem;
   }
 
@@ -428,21 +451,21 @@
   }
 
   .social-icons {
-    position: absolute; /* Position icons absolutely */
-    right: 1rem; /* Align to the right */
-    bottom: 1rem; /* Align to the bottom */
+    position: absolute; 
+    right: 1rem;
+    bottom: 1rem; 
     display: flex;
-    gap: 1rem; /* Space between icons */
+    gap: 1rem;
   }
 
   .social-icon {
-    color: rgb(0, 0, 0); /* Icon color */
-    font-size: 1.5rem; /* Icon size */
-    text-decoration: none; /* Remove underline */
+    color: rgb(0, 0, 0); 
+    font-size: 1.5rem; 
+    text-decoration: none; 
   }
 
   .social-icon:hover {
-    color: #ffffff; /* Change color on hover */
+    color: #ffffff; 
   }
 
   .modal {
@@ -486,8 +509,8 @@
   }
 
   .remove-button {
-    margin: 20px auto; /* Center the button horizontally */
-    display: block; /* Make the button a block element */
+    margin: 20px auto; 
+    display: block; 
     background-color: #344E41;
     color: white;
     padding: 10px;
@@ -496,7 +519,7 @@
     cursor: pointer;
 }
 
-  /* Additional styles for form elements */
+  
   form {
     display: flex;
     flex-direction: column;
@@ -525,22 +548,22 @@
 
   .centered {
     display: block;
-    margin: 0 auto; /* Center the image */
+    margin: 0 auto; 
   }
 
   .date-container {
-    display: flex; /* Use flexbox for inline layout */
-    justify-content:space-evenly; /* Space between start and end */
-    margin: 1rem 0; /* Margin for spacing */
+    display: flex; 
+    justify-content:space-evenly; 
+    margin: 1rem 0; 
   }
 
   .date-item {
     font-size: 12px;
     padding: 0.4rem 0.5rem 0.4rem 0;
-    background-color: #f0f0f0; /* Background color for the date item */
+    background-color: #f0f0f0; 
     width: 300px;
-    border-radius: 4px; /* Rounded corners */
-    color: black; /* Text color */
+    border-radius: 4px;
+    color: black;
   }
   .wrng-hd {
     background-color: #000000;
@@ -566,23 +589,23 @@
   .start{
     font-size: 12px;
     padding: 0.7rem;
-    background-color: #588157; /* Background color for the strong text */
-    color: rgb(0, 0, 0); /* Text color for strong */
-    border-radius: 4px; /* Rounded corners for strong background */
+    background-color: #588157; 
+    color: rgb(0, 0, 0); 
+    border-radius: 4px; 
   }
 
   .end{
     font-size: 12px;
     padding: 0.7rem;
-    background-color: #000000; /* Background color for the strong text */
-    color: white; /* Text color for strong */
-    border-radius: 4px; /* Rounded corners for strong background */
+    background-color: #000000; 
+    color: white; 
+    border-radius: 4px; 
   }
 
   .modal-title {
-    text-align: center; /* Center the title */
-    margin-top: 10px; /* Space between the image and title */
-    font-size: 1.5rem; /* Adjust font size as needed */
-    color: black; /* Change color if needed */
+    text-align: center; 
+    margin-top: 10px; 
+    font-size: 1.5rem; 
+    color: black; 
   }
 </style>

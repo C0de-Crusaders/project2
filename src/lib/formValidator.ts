@@ -6,6 +6,7 @@ interface FormData {
   additional: string;
 }
 
+// Function to validate form data
 export function validateForm(data: FormData) {
   const errors = {
     name: data.name ? '' : 'Name is required.',
@@ -30,6 +31,7 @@ interface EventData {
   location: string;
 }
 
+// Function to validate event data
 export function validateEvent(data: EventData) {
   const errors = {
     eventName: data.eventName ? '' : 'Event name is required.',
@@ -37,8 +39,17 @@ export function validateEvent(data: EventData) {
     contactNumber: /^\d+$/.test(data.contactNumber) ? '' : 'Invalid contact number.',
     startDateTime: data.startDateTime ? '' : 'Start date and time are required.',
     endDateTime: data.endDateTime ? '' : 'End date and time are required.',
-    location: data.location ? '' : 'Location is required.'
+    location: data.location ? '' : 'Location is required.',
   };
+
+  // Check if endDateTime is before startDateTime
+  if (data.startDateTime && data.endDateTime) {
+    const startDate = new Date(data.startDateTime);
+    const endDate = new Date(data.endDateTime);
+    if (endDate < startDate) {
+      errors.endDateTime = 'End date and time must be the same or after the start date and time.';
+    }
+  }
 
   return {
     isValid: !Object.values(errors).some(error => error),

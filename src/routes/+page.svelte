@@ -4,19 +4,21 @@
   let texts: HTMLElement[];
   let index = 0;
 
+  // Function to show the next text in the sliding text container
   function showNextText() {
     texts.forEach((text, i) => {
-      text.style.opacity = i === index ? '1' : '0';
+      text.style.opacity = i === index ? '1' : '0'; 
     });
-    index = (index + 1) % texts.length;
+    index = (index + 1) % texts.length; 
   }
 
+  // Lifecycle function that runs when the component is mounted
   onMount(() => {
-    texts = Array.from(document.querySelectorAll('.sliding-text p'));
-    showNextText(); // Initialize the first text
-    const interval = setInterval(showNextText, 5000);
+    texts = Array.from(document.querySelectorAll('.sliding-text p')); 
+    showNextText(); 
+    const interval = setInterval(showNextText, 5000); 
 
-    return () => clearInterval(interval); // Cleanup on component destroy
+    return () => clearInterval(interval); 
   });
 </script>
 
@@ -28,7 +30,7 @@
       <p class="tagline">Manage Your Events With Ease</p>
       <p>Plan your events with ease and organization.</p>
     </div>
-    <a href="/project2/scheduling" class="get-started">Get Started</a>
+    <a href="/project2/schedule" class="get-started">Get Started</a>
   </div>
 </div>
 
@@ -109,9 +111,9 @@
   border-radius: 50%;
 }
 .text-content h1 {
-  font-size: 1.5rem; /* Increase font size */
-  font-weight: bold; /* Make text bold */
-  margin: 0.5rem 0; /* Add some margin */
+  font-size: 1.5rem; 
+  font-weight: bold; 
+  margin: 0.5rem 0; 
 }
 
 .text-content {
@@ -188,7 +190,7 @@
 }
 
 .card {
-  background-color: rgba(163, 201, 168, 0.6); /* Semi-transparent background */
+  background-color: rgba(163, 201, 168, 0.6); 
   border: 4px solid #344E41;
   border-radius: 12px;
   width: 350px;
@@ -200,17 +202,17 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  background-image: url('/EVENTS.gif'); /* Background for EVENTS card */
-  background-size: cover; /* Cover the entire card */
-  background-position: center; /* Center the background */
+  background-image: url('/EVENTS.gif'); 
+  background-size: cover; 
+  background-position: center; 
 }
 
 .card:nth-child(2) {
-  background-image: url('/REMINDER.gif'); /* Background for REMINDERS card */
+  background-image: url('/REMINDER.gif'); 
 }
 
 .card:nth-child(3) {
-  background-image: url('/IMAGES.gif'); /* Background for IMAGES card */
+  background-image: url('/IMAGES.gif'); 
 }
 
 .card-header {
@@ -260,32 +262,32 @@ footer {
   text-align: center;
   padding: 1rem;
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 8rem; /* Ensure enough height for centering */
+  justify-content: center; 
+  align-items: center; 
+  height: 8rem; 
 }
 
 footer p {
-  font-weight: bold; /* Make text bold */
-  margin: 0; /* Remove default margin */
+  font-weight: bold; 
+  margin: 0; 
 }
 
 .features h2 {
-  font-size: 2rem; /* Adjust size as needed */
-  font-weight: bold; /* Bold text */
-  color: #000; /* Black color */
-  margin-bottom: 0.5rem; /* Space below the heading */
+  font-size: 2rem; 
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 0.5rem; 
 }
 
 .features p {
-  font-size: 1rem; /* Adjust size as needed */
-  font-weight: bold; /* Bold text */
+  font-size: 1rem;
+  font-weight: bold; 
 }
 
 .feature-gif {
-    width: 100%; /* Adjust width as needed */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 8px; /* Optional: rounded corners */
-    margin-bottom: 1rem; /* Space between GIF and text */
+    width: 100%; 
+    height: auto; 
+    border-radius: 8px; 
+    margin-bottom: 1rem; 
 }
 </style>
