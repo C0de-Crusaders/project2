@@ -393,16 +393,13 @@
   }
 
   .edit-button {
-    display: block; /* Make the button a block element */
-    width: 150px; /* Increase the width of the button */
-    margin: 20px auto; /* Center the button with auto margins */
-    background-color: #344E41; /* Button background color */
-    color: white; /* Button text color */
-    padding: 10px; /* Padding for the button */
-    border: none; /* Remove border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    text-align: center; /* Center text inside the button */
+    margin-top: 20px;
+    background-color: #344E41;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
   }
 
   /* Additional styles for form elements */
