@@ -27,7 +27,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #4a7c59;
+    background-color: #588157;
     color: white;
     padding: 1rem;
     position: fixed;

@@ -20,3 +20,28 @@ export function validateForm(data: FormData) {
     errors
   };
 } 
+
+interface EventData {
+  eventName: string;
+  eventType: string;
+  contactNumber: string;
+  startDateTime: string;
+  endDateTime: string;
+  location: string;
+}
+
+export function validateEvent(data: EventData) {
+  const errors = {
+    eventName: data.eventName ? '' : 'Event name is required.',
+    eventType: data.eventType ? '' : 'Event type is required.',
+    contactNumber: /^\d+$/.test(data.contactNumber) ? '' : 'Invalid contact number.',
+    startDateTime: data.startDateTime ? '' : 'Start date and time are required.',
+    endDateTime: data.endDateTime ? '' : 'End date and time are required.',
+    location: data.location ? '' : 'Location is required.'
+  };
+
+  return {
+    isValid: !Object.values(errors).some(error => error),
+    errors
+  };
+}

@@ -1,19 +1,78 @@
 <script>
     import Navbar from '$lib/Navbar.svelte';
-    let showAddModal = false; // State to control add event modal visibility
-    let showViewModal = false; // State to control view event modal visibility
-    let selectedEvent = {}; // Object to hold the selected event details
+    import { validateEvent } from '$lib/validation';
+    import { fly } from 'svelte/transition';
+
+    let showAddModal = false;
+    let showWarning = false;
+    let showViewModal = false;
+    let selectedEvent = null;
+    let eventName = '';
+    let eventType = '';
+    let eventDescription = '';
+    let contactNumber = '';
+    let startDateTime = '';
+    let endDateTime = '';
+    let location = '';
+    let events = [];
+    let errors = {
+        eventName: '',
+        eventType: '',
+        contactNumber: '',
+        startDateTime: '',
+        endDateTime: '',
+        location: ''
+    };
 
     function toggleAddModal() {
-        showAddModal = !showAddModal; // Toggle add modal visibility
+        showAddModal = !showAddModal;
     }
 
-    function openViewModal() {
-        showViewModal = true; // Show the view modal
+    function toggleViewModal(event = null) {
+        showViewModal = !showViewModal;
+        selectedEvent = event;
     }
 
-    function closeViewModal() {
-        showViewModal = false; // Hide the view modal
+    function handleSubmit(event) {
+        event.preventDefault();
+        const newEvent = {
+            eventName,
+            eventType,
+            eventDescription,
+            contactNumber,
+            startDateTime,
+            endDateTime,
+            location
+        };
+
+        const { isValid, errors: validationErrors } = validateEvent(newEvent);
+        errors = validationErrors;
+        if (isValid) {
+            events = [...events, newEvent];
+            console.log('Event scheduled:', newEvent);
+            showWarning = true;
+            setTimeout(() => {
+                showWarning = false;
+            }, 5000);
+            toggleAddModal();
+        } else {
+            console.log('Validation errors:', errors);
+        }
+    }
+
+    function removeEvent() {
+        events = events.filter(event => event !== selectedEvent);
+        toggleViewModal();
+    }
+
+    function formatDateTime(dateTime) {
+        const date = new Date(dateTime);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const timeOptions = { hour: '2-digit', minute: '2-digit' };
+        return {
+            date: date.toLocaleDateString(undefined, options),
+            time: date.toLocaleTimeString(undefined, timeOptions)
+        };
     }
 </script>
 
@@ -23,129 +82,105 @@
   <div class="contact-header"> 
     <h1>SCHEDULE</h1>
   </div> 
-  <div class="scheduling-container">
-      <div class="search-container">
-          <input type="text" placeholder="Search events" class="search-input" />
-          <div class="event-search">
-            <button class="filter-events">Filter Events</button>
-            <button class="add-events" on:click={toggleAddModal}>Add Events</button>
-          </div>
-          {#if showAddModal}
-          <div class="modal">
-            <div class="modal-content">
-              <span class="close" on:click={toggleAddModal}>&times;</span>
-              <h2><strong>Add Event</strong></h2>
-              <form>
-                <label>Event Name</label>
-                <input type="text" placeholder="Enter event name" />
-                
-                <label>Event Type</label>
-                <input type="text" placeholder="Enter event type" />
-                
-                <label>Event Description</label>
-                <textarea placeholder="Add description"></textarea>
-                
-                <label>Contact No.</label>
-                <input type="text" placeholder="Add Contact" />
-                
-                <label>Start Date and Time</label>
-                <input type="datetime-local" />
-                
-                <label>End Date and Time</label>
-                <input type="datetime-local" />
-                
-                <label>Location</label>
-                <input type="text" placeholder="Enter event location" />
-                
-                <label>Image</label>
-                <input type="file" />
-                
-                <button type="submit">Save</button>
-              </form>
-            </div>
-          </div>
-        {/if}
-      </div>
-
-      <div class="today-section">
-        <h2>Today</h2>
-        <div class="event-card" on:click={() => openViewModal()}>
-            <img src="pic2.jpg" alt="Event Image" class="event-image" />
-            <div class="event-details">
-                <h3>Visit Cemetery</h3>
-                <p>Holiday</p>
-                <div class="event-info">
-                    <span class="date-time">Nov 1, 2024</span>
-                    <span class="date-time">3:00 AM</span>
-                </div>
-            </div>
-            <button class="view-button" on:click={() => openViewModal()}>VIEW</button>
-        </div>
-    </div>
-  
-    <!-- View Modal -->
-    {#if showViewModal}
-      <div class="modal">
-        <div class="modal-content">
-          <span class="close" on:click={closeViewModal}>&times;</span>
-          <img src="pic2.jpg" alt="Event Image" class="event-image centered" />
-          <h2 class="modal-title">Birthday</h2>
-          <p><strong>Location:</strong> Lincoln Heights Subd.</p>
-          <p><strong>Contact:</strong> +63970****9</p>
-          <div class="date-container">
-            <div class="date-item">
-              <strong class="start">START:</strong> October 31, 2024 1:00 PM
-            </div>
-            <div class="date-item">
-              <strong class="end">END:</strong> October 31, 2024 6:30 PM
-            </div>
-          </div>
-          <p><strong>Description:</strong> A dialog is a type of modal window...</p>
-          <button class="edit-button">Edit</button>
-        </div>
-      </div>
-    {/if}
-  
-
-      <div class="yesterday-section">
-          <h2>Yesterday</h2>
-          <div class="event-card">
-              <img src="pic2.jpg" alt="Event Image" class="event-image" />
-              <div class="event-details">
-                  <h3>Birthday</h3>
-                  <p>Birthday</p>
-                  <div class="event-info">
-                      <span class="date-time">Oct 31, 2024</span>
-                      <span class="date-time">1:00 PM</span>
-                  </div>
-              </div>
-              <button class="view-button">VIEW</button>
-          </div>
-          <div class="event-card">
-              <img src="pic2.jpg" alt="Event Image" class="event-image" />
-              <div class="event-details">
-                  <h3>Mandated Half Day</h3>
-                  <p>National Event</p>
-                  <div class="event-info">
-                      <span class="date-time">Oct 31, 2024</span>
-                      <span class="date-time">12:00 PM</span>
-                  </div>
-              </div>
-              <button class="view-button">VIEW</button>
-          </div>
-      </div>
-      <div class="pagination">
-        <button class="prev-button">← Previous</button>
-        <span class="page-number">1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>...</span>
-        <span>9</span>
-        <span>10</span>
-        <button class="next-button">Next →</button>
-    </div>
-  </div>
 </div>
+<div class="scheduling-container">
+    <div class="search-container">
+        <input type="text" placeholder="Search events" class="search-input" />
+        <div class="event-search">
+          <button class="filter-events">Filter Events</button>
+          <button class="add-events" on:click={toggleAddModal}>Add Events</button>
+        </div>
+        {#if showAddModal}
+        <div class="modal">
+          <div class="modal-content">
+            <span class="close" on:click={toggleAddModal}>&times;</span>
+            <h2><strong>Add Event</strong></h2>
+            <form on:submit={handleSubmit}>
+              <label>Event Name</label>
+              <input type="text" name="eventName" bind:value={eventName} placeholder="Enter event name" />
+              {#if errors.eventName}<small class="error">{errors.eventName}</small>{/if}
+
+              <label>Event Type</label>
+              <input type="text" name="eventType" bind:value={eventType} placeholder="Enter event type" />
+              {#if errors.eventType}<small class="error">{errors.eventType}</small>{/if}
+
+              <label>Event Description</label>
+              <textarea name="eventDescription" bind:value={eventDescription} placeholder="Add description"></textarea>
+
+              <label>Contact No.</label>
+              <input type="text" name="contactNumber" bind:value={contactNumber} placeholder="Add Contact" />
+              {#if errors.contactNumber}<small class="error">{errors.contactNumber}</small>{/if}
+
+              <label>Start Date and Time</label>
+              <input type="datetime-local" name="startDateTime" bind:value={startDateTime} />
+              {#if errors.startDateTime}<small class="error">{errors.startDateTime}</small>{/if}
+
+              <label>End Date and Time</label>
+              <input type="datetime-local" name="endDateTime" bind:value={endDateTime} />
+              {#if errors.endDateTime}<small class="error">{errors.endDateTime}</small>{/if}
+
+              <label>Location</label>
+              <input type="text" name="location" bind:value={location} placeholder="Enter event location" />
+              {#if errors.location}<small class="error">{errors.location}</small>{/if}
+
+              <button type="submit">Save</button>
+            </form>
+          </div>
+        </div>
+      {/if}
+      
+      {#if showWarning}
+        <div class="warning-note" transition:fly={{ x: 300, duration: 500 }}>
+          <div class="wrng-hd">
+            <p><strong>Event Scheduled!</strong></p>
+          </div>
+        </div>
+      {/if}
+    
+  </div>
+
+  <div class="today-section">
+    <h2>Events</h2>
+    {#each events as event}
+      <div class="event-card">
+        <img src="pic2.jpg" alt="Event Image" class="event-image" />
+        <div class="event-details">
+          <h3>{event.eventName}</h3>
+          <p>{event.eventType}</p>
+          <div class="event-info">
+            <span class="date-time">{formatDateTime(event.startDateTime).date}</span>
+            <span class="date-time">{formatDateTime(event.startDateTime).time}</span>
+          </div>
+        </div>
+        <button class="view-button" on:click={() => toggleViewModal(event)}>VIEW</button>
+      </div>
+    {/each}
+  </div>
+
+  <!-- View Modal -->
+  {#if showViewModal && selectedEvent}
+    <div class="modal">
+      <div class="modal-content">
+        <span class="close" on:click={toggleViewModal}>&times;</span>
+        <img src="pic2.jpg" alt="Event Image" class="event-image centered" />
+        <h2 class="modal-title">{selectedEvent.eventName}</h2>
+        <p><strong>Location:</strong> {selectedEvent.location}</p>
+        <p><strong>Contact:</strong> {selectedEvent.contactNumber}</p>
+        <div class="date-container">
+          <div class="date-item">
+            <strong class="start">START:</strong> {selectedEvent.startDateTime}
+          </div>
+          <div class="date-item">
+            <strong class="end">END:</strong> {selectedEvent.endDateTime}
+          </div>
+        </div>
+        <p><strong>Description:</strong> {selectedEvent.eventDescription}</p>
+        <button class="remove-button" on:click={removeEvent}>Remove</button>
+      </div>
+    </div>
+  {/if}
+</div>
+
 <footer>
     <p class="copyright">© 2024 PlanNext. All Rights Reserved.</p>
     <div class="social-icons">
@@ -392,15 +427,16 @@
     cursor: pointer;
   }
 
-  .edit-button {
-    margin-top: 20px;
+  .remove-button {
+    margin: 20px auto; /* Center the button horizontally */
+    display: block; /* Make the button a block element */
     background-color: #344E41;
     color: white;
     padding: 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
+}
 
   /* Additional styles for form elements */
   form {
@@ -436,7 +472,7 @@
 
   .date-container {
     display: flex; /* Use flexbox for inline layout */
-    justify-content: space-between; /* Space between start and end */
+    justify-content:space-evenly; /* Space between start and end */
     margin: 1rem 0; /* Margin for spacing */
   }
 
@@ -444,11 +480,31 @@
     font-size: 12px;
     padding: 0.4rem 0.5rem 0.4rem 0;
     background-color: #f0f0f0; /* Background color for the date item */
-
+    width: 300px;
     border-radius: 4px; /* Rounded corners */
     color: black; /* Text color */
   }
-
+  .wrng-hd {
+    background-color: #000000;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .wrng-hd strong {
+    color: #ffffff;
+  }
+  .warning-note {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+    margin-top: 1rem;
+    font-size: 12px;
+    background-color: #DAD7CD;
+    border: 5px solid #000000;
+    border-radius: 4px;
+  }
   .start{
     font-size: 12px;
     padding: 0.7rem;
